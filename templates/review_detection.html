@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Review Detection - FlipGuard | AI Review Authenticity</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* ========= MODERN FLIPKART-INSPIRED UI ========= */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background: #f1f3f6;
+            color: #212121;
+        }
+
+        /* Navigation - Clean white navbar like Flipkart */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #f8fafc;
+            color: #0a2540;
+            scroll-behavior: smooth;
+        }
+
+        /* modern white/blue theme with subtle gradients */
+        :root {
+            --primary-blue: #1e3a8a;
+            --accent-blue: #2563eb;
+            --sky-mist: #eff6ff;
+            --pure-white: #ffffff;
+            --soft-gray: #f1f5f9;
+            --slate: #334155;
+            --flipkart-blue: #2874f0;
+        }
+
+        /* Navigation - sleek glassmorphism */
+        .navbar {
+            background: rgba(255, 255, 255, 0.96) !important;
+            backdrop-filter: blur(2px);
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.03), 0 1px 0 rgba(0, 0, 0, 0.02);
+            padding: 0.85rem 0;
+        }
+
+        .navbar-brand {
+            font-weight: 700;
+            font-size: 1.6rem;
+            letter-spacing: -0.3px;
+            background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent !important;
+        }
+
+        .navbar-brand i {
+            background: none;
+            -webkit-background-clip: unset;
+            background-clip: unset;
+            color: #2563eb;
+            margin-right: 6px;
+        }
+
+        .nav-link {
+            font-weight: 500;
+            color: #1e293b !important;
+            margin: 0 0.5rem;
+            transition: all 0.2s ease;
+            border-radius: 40px;
+            padding: 0.5rem 1rem;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            color: #2563eb !important;
+            background-color: #eff6ff;
+        }
+
+        /* Page Header */
+        .page-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        .page-header h2 {
+            font-weight: 800;
+            font-size: 2rem;
+            background: linear-gradient(135deg, #1f1f1f, #2874f0);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 0.5rem;
+        }
+        .page-header p {
+            color: #5f6c7a;
+            font-weight: 500;
+        }
+
+        /* Detection Card */
+        .detection-card {
+            background: white;
+            border-radius: 28px;
+            padding: 2rem;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.04), 0 2px 4px rgba(0, 0, 0, 0.02);
+            margin-bottom: 2rem;
+            border: 1px solid #f0f2f5;
+        }
+
+        /* Input Group Styling */
+        .input-group {
+            background: white;
+            border-radius: 60px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+            border: 1px solid #e0e7ed;
+            transition: all 0.2s;
+        }
+        .input-group:focus-within {
+            border-color: #2874f0;
+            box-shadow: 0 0 0 3px rgba(40, 116, 240, 0.1);
+        }
+        .form-control {
+            border: none;
+            padding: 0.9rem 1.5rem;
+            font-size: 0.95rem;
+            background: white;
+            outline: none;
+            box-shadow: none;
+        }
+        .form-control:focus {
+            box-shadow: none;
+            border: none;
+            outline: none;
+        }
+        .btn-primary {
+            background: #2874f0;
+            border: none;
+            padding: 0.9rem 2rem;
+            font-weight: 600;
+            border-radius: 0 60px 60px 0;
+            transition: all 0.2s;
+        }
+        .btn-primary:hover {
+            background: #1a5fcf;
+            transform: translateY(-1px);
+        }
+
+        /* Product Preview Card */
+        .product-preview {
+            background: white;
+            border-radius: 24px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            border: 1px solid #eef2f6;
+            transition: all 0.2s;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
+        }
+        .product-preview:hover {
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+        }
+        .product-preview h4 {
+            font-weight: 700;
+            font-size: 1.2rem;
+            margin-bottom: 1.2rem;
+            color: #1f1f1f;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border-left: 3px solid #2874f0;
+            padding-left: 12px;
+        }
+        .product-image-small {
+            max-height: 100px;
+            width: auto;
+            object-fit: contain;
+            border-radius: 16px;
+            background: #fafcff;
+            padding: 6px;
+            border: 1px solid #eef2f6;
+        }
+        .product-preview h5 {
+            font-weight: 700;
+            font-size: 1rem;
+            margin-bottom: 0.5rem;
+            color: #1f1f1f;
+        }
+        .info-badge {
+            background: #f0f5ff;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: #2874f0;
+            display: inline-block;
+        }
+        .product-link-custom {
+            color: #2874f0;
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+        .product-link-custom:hover {
+            text-decoration: underline;
+        }
+
+        /* Stats Card - Modern Gradient */
+        .stats-card {
+            background: linear-gradient(135deg, #2874f0 0%, #1a5fcf 100%);
+            color: white;
+            padding: 1.8rem;
+            border-radius: 28px;
+            margin-bottom: 2rem;
+            box-shadow: 0 12px 28px rgba(40, 116, 240, 0.25);
+        }
+        .stats-card h3 {
+            font-weight: 700;
+            font-size: 1.3rem;
+            margin-bottom: 1.2rem;
+        }
+        .stats-card h2 {
+            font-weight: 800;
+            font-size: 2.5rem;
+            margin-bottom: 0;
+        }
+        .stats-card .text-danger {
+            color: #ffb3b3 !important;
+        }
+        .stats-card .text-success {
+            color: #c8f0c8 !important;
+        }
+        .progress {
+            height: 12px;
+            border-radius: 20px;
+            background-color: rgba(255, 255, 255, 0.2);
+            overflow: hidden;
+            margin-top: 1rem;
+        }
+        .progress-bar {
+            font-size: 0.7rem;
+            font-weight: 600;
+            line-height: 12px;
+        }
+        .progress-bar.bg-danger {
+            background-color: #ff6b6b !important;
+        }
+        .progress-bar.bg-success {
+            background-color: #6fcf97 !important;
+        }
+
+        /* Review Cards - Modern Design */
+        .reviews-section h4 {
+            font-weight: 700;
+            font-size: 1.2rem;
+            margin-bottom: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #1f1f1f;
+        }
+        .review-card {
+            border-left: 4px solid;
+            margin-bottom: 16px;
+            transition: all 0.25s ease;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.02);
+        }
+        .review-card:hover {
+            transform: translateX(6px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+        }
+        .fake-review {
+            border-left-color: #dc3545;
+            background: linear-gradient(135deg, #fff8f8 0%, #fff0f0 100%);
+        }
+        .real-review {
+            border-left-color: #28a745;
+            background: linear-gradient(135deg, #f8fff8 0%, #f0faf0 100%);
+        }
+        .review-card .card-body {
+            padding: 1.2rem 1.5rem;
+        }
+        .review-text {
+            font-size: 0.9rem;
+            line-height: 1.5;
+            color: #2c3e50;
+            margin-bottom: 0;
+        }
+        .badge-custom {
+            padding: 6px 16px;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 0.7rem;
+            letter-spacing: 0.3px;
+        }
+        .badge-fake {
+            background: #dc3545;
+            color: white;
+            box-shadow: 0 2px 6px rgba(220, 53, 69, 0.2);
+        }
+        .badge-real {
+            background: #28a745;
+            color: white;
+            box-shadow: 0 2px 6px rgba(40, 167, 69, 0.2);
+        }
+
+        /* Alert Styling */
+        .alert {
+            border-radius: 20px;
+            border: none;
+            padding: 1rem 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        .alert-danger {
+            background: #ffe9e9;
+            color: #c62828;
+        }
+
+        /* Trust Badge */
+        .trust-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: #f8fafd;
+            border-radius: 40px;
+            padding: 0.4rem 1rem;
+            font-size: 0.75rem;
+            color: #2874f0;
+            margin-top: 1rem;
+        }
+
+        /* Footer */
+        footer {
+            background: #ffffff;
+            border-top: 1px solid #eef2f6;
+            color: #5f6c7a;
+            padding: 2rem 0;
+            margin-top: 3rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .detection-card {
+                padding: 1.2rem;
+            }
+            .btn-primary {
+                padding: 0.9rem 1.2rem;
+            }
+            .stats-card h2 {
+                font-size: 1.8rem;
+            }
+            .page-header h2 {
+                font-size: 1.6rem;
+            }
+            .review-card .card-body {
+                padding: 1rem;
+            }
+            .product-preview .row {
+                flex-direction: column;
+                text-align: center;
+            }
+            .product-image-small {
+                margin-bottom: 1rem;
+            }
+        }
+
+        /* Animation */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .stats-card, .review-card {
+            animation: fadeIn 0.4s ease;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="/">
+                <i class="fas fa-shield-alt"></i> FakeCheck<span style="font-weight:400"> | AI</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="/"><i class="fas fa-home me-1"></i>Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/upload"><i class="fas fa-cloud-upload-alt me-1"></i>Upload</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/products"><i class="fas fa-boxes me-1"></i>Products</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/product_detection"><i class="fas fa-search me-1"></i>Product AI</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="/review_detection"><i class="fas fa-star-half-alt me-1"></i>Review AI</a></li>
+                   
+                    <li class="nav-item"><a class="nav-link" href="/about"><i class="fas fa-info-circle me-1"></i>About</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="container mt-5">
+        <div class="page-header">
+            <h2><i class="fas fa-star-half-alt"></i> Review Authenticity Detection</h2>
+            <p>AI-powered sentiment & pattern analysis to detect fake customer reviews</p>
+        </div>
+        
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="detection-card">
+                    <form method="POST" class="mb-2">
+                        <label class="form-label fw-semibold mb-2"><i class="fas fa-link me-1"></i> Enter product URL to analyze reviews</label>
+                        <div class="input-group">
+                            <input type="url" class="form-control" name="link" placeholder="https://example.com/product/12345" required>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-chart-line me-1"></i> Analyze Reviews
+                            </button>
+                        </div>
+                        <div class="trust-badge">
+                            <i class="fas fa-robot"></i> NLP-based detection · 94% accuracy
+                        </div>
+                    </form>
+                </div>
+
+                {% if error %}
+                    <div class="alert alert-danger text-center">
+                        <i class="fas fa-exclamation-triangle me-2"></i> {{ error }}
+                    </div>
+                {% endif %}
+
+                {% if product %}
+                    <div class="product-preview">
+                        <h4>
+                            <i class="fas fa-box-open" style="color:#2874f0;"></i> 
+                            Product Details
+                        </h4>
+                        <div class="row align-items-center">
+                            <div class="col-md-2 text-center">
+                                <img src="{{ url_for('static', filename='uploads/' + product.image) }}" class="product-image-small img-fluid rounded" alt="{{ product.title }}" onerror="this.src='https://placehold.co/100x100/f1f3f6/2874f0?text=Product'">
+                            </div>
+                            <div class="col-md-10">
+                                <h5>{{ product.title }}</h5>
+                                <p class="text-muted mb-1"><i class="fas fa-building"></i> Brand: {{ product.brand if product.brand else 'Trusted Seller' }}</p>
+                                <div class="row mt-2">
+                                    <div class="col-md-4">
+                                        <span class="info-badge"><i class="fas fa-tag"></i> Price: ${{ "%.2f"|format(product.price) }}</span>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <span class="info-badge"><i class="fas fa-star" style="color:#ff9f00;"></i> Rating: {{ "%.1f"|format(product.rating) }}/5.0</span>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <a href="{{ product.link }}" target="_blank" class="product-link-custom">
+                                            <i class="fas fa-external-link-alt"></i> View Original Product →
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+
+                {% if reviews %}
+                    <div class="stats-card text-center">
+                        <h3><i class="fas fa-chart-pie"></i> Review Analysis Summary</h3>
+                        <div class="row mt-3">
+                            <div class="col-md-6">
+                                <h2 class="text-danger">{{ fake_percent }}%</h2>
+                                <p><i class="fas fa-exclamation-circle"></i> Fake Reviews</p>
+                            </div>
+                            <div class="col-md-6">
+                                <h2 class="text-success">{{ real_percent }}%</h2>
+                                <p><i class="fas fa-check-circle"></i> Real Reviews</p>
+                            </div>
+                        </div>
+                        <div class="progress mt-3">
+                            <div class="progress-bar bg-danger" style="width: {{ fake_percent }}%">{{ fake_percent }}%</div>
+                            <div class="progress-bar bg-success" style="width: {{ real_percent }}%">{{ real_percent }}%</div>
+                        </div>
+                        <div class="mt-3 small">
+                            <i class="fas fa-info-circle"></i> Based on linguistic patterns, sentiment analysis & review consistency
+                        </div>
+                    </div>
+
+                    <div class="reviews-section">
+                        <h4>
+                            <i class="fas fa-comments" style="color:#2874f0;"></i>
+                            Analyzed Reviews <span class="badge bg-light text-dark ms-2 rounded-pill">{{ reviews|length }} total</span>
+                        </h4>
+                        {% for review in reviews %}
+                            <div class="review-card {{ 'fake-review' if review.predicted == 'Fake' else 'real-review' }} card">
+                                <div class="card-body">
+                                    <div class="d-flex justify-content-between align-items-start flex-wrap gap-2">
+                                        <div class="flex-grow-1">
+                                            <p class="review-text">{{ review.review_text }}</p>
+                                        </div>
+                                        <span class="badge-custom {{ 'badge-fake' if review.predicted == 'Fake' else 'badge-real' }}">
+                                            <i class="fas {{ 'fa-exclamation-triangle' if review.predicted == 'Fake' else 'fa-check-circle' }} me-1"></i>
+                                            {{ review.predicted }}
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <footer class="bg-dark text-white py-4 mt-5">
+        <div class="container text-center">
+            <p>&copy; 2024 Fake Review Detection System. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,5 @@
+image,title,price,description,features,address,brand,rating,link
+laptop.jpg,MacBook Pro 2024,1299.99,Latest MacBook Pro with M3 chip,16GB RAM|512GB SSD|Retina Display,New York,Apple,4.8,https://example.com/macbook
+headphones.jpg,Sony WH-1000XM5,349.99,Industry-leading noise cancellation,30hr battery|Quick charge|Touch controls,Tokyo,Sony,4.7,https://example.com/sony-headphones
+smartphone.jpg,Samsung Galaxy S24,999.99,Flagship smartphone with AI features,6.8 inch display|AI Camera|5000mAh battery,Seoul,Samsung,4.6,https://example.com/galaxy-s24
+watch.jpg,Apple Watch Series 9,399.99,Advanced health and fitness features,Blood oxygen|ECG|Always-on display,California,Apple,4.8,https://example.com/apple-watch

@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Product Detection - FlipGuard | AI Authenticity Check</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* ========= MODERN FLIPKART-INSPIRED UI ========= */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background: #f1f3f6;
+            color: #212121;
+        }
+
+        /* Navigation - Clean white navbar */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #f8fafc;
+            color: #0a2540;
+            scroll-behavior: smooth;
+        }
+
+        /* modern white/blue theme with subtle gradients */
+        :root {
+            --primary-blue: #1e3a8a;
+            --accent-blue: #2563eb;
+            --sky-mist: #eff6ff;
+            --pure-white: #ffffff;
+            --soft-gray: #f1f5f9;
+            --slate: #334155;
+            --flipkart-blue: #2874f0;
+        }
+
+        /* Navigation - sleek glassmorphism */
+        .navbar {
+            background: rgba(255, 255, 255, 0.96) !important;
+            backdrop-filter: blur(2px);
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.03), 0 1px 0 rgba(0, 0, 0, 0.02);
+            padding: 0.85rem 0;
+        }
+
+        .navbar-brand {
+            font-weight: 700;
+            font-size: 1.6rem;
+            letter-spacing: -0.3px;
+            background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent !important;
+        }
+
+        .navbar-brand i {
+            background: none;
+            -webkit-background-clip: unset;
+            background-clip: unset;
+            color: #2563eb;
+            margin-right: 6px;
+        }
+
+        .nav-link {
+            font-weight: 500;
+            color: #1e293b !important;
+            margin: 0 0.5rem;
+            transition: all 0.2s ease;
+            border-radius: 40px;
+            padding: 0.5rem 1rem;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            color: #2563eb !important;
+            background-color: #eff6ff;
+        }
+
+        /* Main container */
+        .container {
+            max-width: 1200px;
+        }
+
+        /* Page Header */
+        .page-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        .page-header h2 {
+            font-weight: 800;
+            font-size: 2rem;
+            background: linear-gradient(135deg, #1f1f1f, #2874f0);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 0.5rem;
+        }
+        .page-header p {
+            color: #5f6c7a;
+            font-weight: 500;
+        }
+
+        /* Detection Card - Modern Form */
+        .detection-card {
+            background: white;
+            border-radius: 28px;
+            padding: 2rem;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.04), 0 2px 4px rgba(0, 0, 0, 0.02);
+            margin-bottom: 2rem;
+            border: 1px solid #f0f2f5;
+        }
+
+        /* Input Group Styling */
+        .input-group {
+            background: white;
+            border-radius: 60px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+            border: 1px solid #e0e7ed;
+            transition: all 0.2s;
+        }
+        .input-group:focus-within {
+            border-color: #2874f0;
+            box-shadow: 0 0 0 3px rgba(40, 116, 240, 0.1);
+        }
+        .form-control {
+            border: none;
+            padding: 0.9rem 1.5rem;
+            font-size: 0.95rem;
+            background: white;
+            outline: none;
+            box-shadow: none;
+        }
+        .form-control:focus {
+            box-shadow: none;
+            border: none;
+            outline: none;
+        }
+        .btn-primary {
+            background: #2874f0;
+            border: none;
+            padding: 0.9rem 2rem;
+            font-weight: 600;
+            border-radius: 0 60px 60px 0;
+            transition: all 0.2s;
+        }
+        .btn-primary:hover {
+            background: #1a5fcf;
+            transform: translateY(-1px);
+        }
+
+        /* Product Preview Card */
+        .product-preview {
+            background: white;
+            border-radius: 24px;
+            padding: 1.5rem;
+            margin-top: 1.5rem;
+            border: 1px solid #eef2f6;
+            transition: all 0.2s;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
+        }
+        .product-preview:hover {
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+        }
+        .product-preview h4 {
+            font-weight: 700;
+            font-size: 1.2rem;
+            margin-bottom: 1.2rem;
+            color: #1f1f1f;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border-left: 3px solid #2874f0;
+            padding-left: 12px;
+        }
+        .product-image-small {
+            max-height: 130px;
+            width: auto;
+            object-fit: contain;
+            border-radius: 16px;
+            background: #fafcff;
+            padding: 8px;
+            border: 1px solid #eef2f6;
+        }
+        .product-preview h5 {
+            font-weight: 700;
+            font-size: 1rem;
+            margin-bottom: 0.5rem;
+            color: #1f1f1f;
+        }
+        .info-badge {
+            background: #f0f5ff;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: #2874f0;
+            display: inline-block;
+        }
+        .product-link {
+            color: #2874f0;
+            text-decoration: none;
+            font-size: 0.8rem;
+            word-break: break-all;
+        }
+        .product-link:hover {
+            text-decoration: underline;
+        }
+
+        /* Result Card - Modern Design */
+        .result-card {
+            border-radius: 28px;
+            padding: 2rem;
+            margin-top: 1.5rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            animation: fadeInUp 0.4s ease;
+        }
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(15px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .fake-result {
+            background: linear-gradient(135deg, #fff5f5 0%, #ffe9e9 100%);
+            border-left: 5px solid #dc3545;
+            box-shadow: 0 8px 20px rgba(220, 53, 69, 0.08);
+        }
+        .real-result {
+            background: linear-gradient(135deg, #f0f9f0 0%, #e6f4e6 100%);
+            border-left: 5px solid #28a745;
+            box-shadow: 0 8px 20px rgba(40, 167, 69, 0.08);
+        }
+        .result-card h3 {
+            font-weight: 700;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #1f1f1f;
+        }
+        .result-card .display-4 {
+            font-size: 2.8rem;
+            font-weight: 800;
+            margin: 0.5rem 0;
+        }
+        .fake-result .display-4 {
+            color: #dc3545;
+        }
+        .real-result .display-4 {
+            color: #28a745;
+        }
+        .result-icon {
+            font-size: 3rem;
+            margin-bottom: 0.5rem;
+        }
+        .result-message {
+            margin-top: 1rem;
+            font-size: 0.95rem;
+            color: #5f6c7a;
+        }
+
+        /* Alert styling */
+        .alert {
+            border-radius: 20px;
+            border: none;
+            padding: 1rem 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        .alert-success {
+            background: #e6f4e6;
+            color: #2e7d32;
+        }
+        .alert-danger {
+            background: #ffe9e9;
+            color: #c62828;
+        }
+
+        /* Footer */
+        footer {
+            background: #ffffff;
+            border-top: 1px solid #eef2f6;
+            color: #5f6c7a;
+            padding: 2rem 0;
+            margin-top: 3rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .detection-card {
+                padding: 1.2rem;
+            }
+            .btn-primary {
+                padding: 0.9rem 1.2rem;
+            }
+            .result-card .display-4 {
+                font-size: 2rem;
+            }
+            .page-header h2 {
+                font-size: 1.6rem;
+            }
+        }
+
+        /* Trust badge */
+        .trust-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: #f8fafd;
+            border-radius: 40px;
+            padding: 0.4rem 1rem;
+            font-size: 0.75rem;
+            color: #2874f0;
+            margin-top: 1rem;
+        }
+        .info-row {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-top: 0.8rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+     <nav class="navbar navbar-expand-lg sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="/">
+                <i class="fas fa-shield-alt"></i> FakeCheck<span style="font-weight:400"> | AI</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link " href="/"><i class="fas fa-home me-1"></i>Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/upload"><i class="fas fa-cloud-upload-alt me-1"></i>Upload</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/products"><i class="fas fa-boxes me-1"></i>Products</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="/product_detection"><i class="fas fa-search me-1"></i>Product AI</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/review_detection"><i class="fas fa-star-half-alt me-1"></i>Review AI</a></li>
+                    
+                    <li class="nav-item"><a class="nav-link" href="/about"><i class="fas fa-info-circle me-1"></i>About</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="container mt-5">
+        <div class="page-header">
+            <h2><i class="fas fa-microchip"></i> Product Authenticity Detection</h2>
+            <p>AI-powered analysis to identify counterfeit products using price & rating patterns</p>
+        </div>
+        
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ 'danger' if category == 'error' else 'success' }} alert-dismissible fade show" role="alert">
+                        <i class="fas fa-{{ 'exclamation-triangle' if category == 'error' else 'check-circle' }} me-2"></i>
+                        {{ message }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="detection-card">
+                    <form method="POST" class="mb-2">
+                        <label class="form-label fw-semibold mb-2"><i class="fas fa-link me-1"></i> Paste product URL to verify</label>
+                        <div class="input-group">
+                            <input type="url" class="form-control" name="link" placeholder="https://example.com/product/12345" required>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-search me-1"></i> Detect
+                            </button>
+                        </div>
+                        <div class="trust-badge">
+                            <i class="fas fa-shield-alt"></i> Real-time analysis · 98% accuracy
+                        </div>
+                    </form>
+                </div>
+
+                {% if product %}
+                    <div class="product-preview">
+                        <h4>
+                            <i class="fas fa-box-open" style="color:#2874f0;"></i> 
+                            Product Snapshot
+                        </h4>
+                        <div class="row align-items-center">
+                            <div class="col-md-3 text-center">
+                                <img src="{{ url_for('static', filename='uploads/' + product.image) }}" class="product-image-small img-fluid rounded" alt="{{ product.title }}" onerror="this.src='https://placehold.co/200x200/f1f3f6/2874f0?text=Product'">
+                            </div>
+                            <div class="col-md-9">
+                                <h5>{{ product.title }}</h5>
+                                <div class="info-row">
+                                    <span class="info-badge"><i class="fas fa-building"></i> {{ product.brand if product.brand else 'Trusted Seller' }}</span>
+                                    <span class="info-badge"><i class="fas fa-tag"></i> Price analysis active</span>
+                                </div>
+                                <div class="row mt-3">
+                                    <div class="col-md-6">
+                                        <div><strong><i class="fas fa-rupee-sign"></i> Price:</strong> <span style="font-size:1.2rem; font-weight:700; color:#388e3c;">${{ "%.2f"|format(product.price) }}</span></div>
+                                        <div class="mt-1"><strong><i class="fas fa-star" style="color:#ff9f00;"></i> Rating:</strong> {{ "%.1f"|format(product.rating) }}/5.0</div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <strong><i class="fas fa-link"></i> Source URL:</strong><br>
+                                        <a href="{{ product.link }}" target="_blank" class="product-link">{{ product.link[:60] }}{% if product.link|length > 60 %}...{% endif %}</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+
+                {% if result %}
+                    <div class="result-card {{ 'fake-result' if 'Fake' in result else 'real-result' }}">
+                        <div class="result-icon">
+                            {% if 'Fake' in result %}
+                                <i class="fas fa-exclamation-triangle" style="color:#dc3545;"></i>
+                            {% else %}
+                                <i class="fas fa-check-circle" style="color:#28a745;"></i>
+                            {% endif %}
+                        </div>
+                        <h3>Detection Result</h3>
+                        <div class="display-4">{{ result }}</div>
+                        {% if 'Fake' in result %}
+                            <div class="result-message">
+                                <i class="fas fa-chart-line me-1"></i> ⚠️ This product shows anomalies in price-to-rating patterns. 
+                                <strong>High probability of counterfeit.</strong> We recommend verifying with official sources.
+                            </div>
+                        {% else %}
+                            <div class="result-message">
+                                <i class="fas fa-chart-line me-1"></i> ✅ This product appears genuine based on price consistency and rating distribution. 
+                                <strong>Low risk detected.</strong>
+                            </div>
+                        {% endif %}
+                        <div class="mt-3">
+                            <a href="/review_detection" class="btn btn-sm btn-outline-primary rounded-pill px-3">
+                                <i class="fas fa-star"></i> Also analyze reviews
+                            </a>
+                        </div>
+                    </div>
+                {% endif %}
+                
+                <!-- Trust Indicator -->
+                <div class="text-center mt-4">
+                    <small class="text-muted"><i class="fas fa-robot"></i> AI Model: Price-Rating Anomaly Detection | Confidence threshold: 92%</small>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="bg-dark text-white py-4 mt-5">
+        <div class="container text-center">
+            <p>&copy; 2024 Fake Review Detection System. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

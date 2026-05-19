@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>About Us - FlipGuard | AI-Powered Trust Platform</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* ========= MODERN FLIPKART-INSPIRED UI ========= */
+       * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #f8fafc;
+            color: #0a2540;
+            scroll-behavior: smooth;
+        }
+
+        /* modern white/blue theme with subtle gradients */
+        :root {
+            --primary-blue: #1e3a8a;
+            --accent-blue: #2563eb;
+            --sky-mist: #eff6ff;
+            --pure-white: #ffffff;
+            --soft-gray: #f1f5f9;
+            --slate: #334155;
+            --flipkart-blue: #2874f0;
+        }
+
+        /* Navigation - sleek glassmorphism */
+        .navbar {
+            background: rgba(255, 255, 255, 0.96) !important;
+            backdrop-filter: blur(2px);
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.03), 0 1px 0 rgba(0, 0, 0, 0.02);
+            padding: 0.85rem 0;
+        }
+
+        .navbar-brand {
+            font-weight: 700;
+            font-size: 1.6rem;
+            letter-spacing: -0.3px;
+            background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent !important;
+        }
+
+        .navbar-brand i {
+            background: none;
+            -webkit-background-clip: unset;
+            background-clip: unset;
+            color: #2563eb;
+            margin-right: 6px;
+        }
+
+        .nav-link {
+            font-weight: 500;
+            color: #1e293b !important;
+            margin: 0 0.5rem;
+            transition: all 0.2s ease;
+            border-radius: 40px;
+            padding: 0.5rem 1rem;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            color: #2563eb !important;
+            background-color: #eff6ff;
+        }
+
+
+        /* Mission Vision Hero Section - Modern Gradient */
+        .mission-vision {
+            background: linear-gradient(135deg, #2874f0 0%, #1a5fcf 100%);
+            color: white;
+            padding: 4rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+        .mission-vision::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 300px;
+            height: 300px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+        .mission-vision h1 {
+            font-weight: 800;
+            font-size: 2.8rem;
+            margin-bottom: 1rem;
+        }
+        .mission-vision .lead {
+            font-size: 1.2rem;
+            opacity: 0.95;
+        }
+
+        /* About Section Cards */
+        .about-section {
+            padding: 4rem 0;
+            background: #ffffff;
+        }
+        .about-card {
+            background: white;
+            border-radius: 28px;
+            padding: 2rem;
+            height: 100%;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.04);
+            border: 1px solid #f0f2f5;
+            transition: all 0.3s ease;
+        }
+        .about-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 35px -12px rgba(40, 116, 240, 0.15);
+            border-color: #e0e9f5;
+        }
+        .about-card h3 {
+            font-weight: 700;
+            font-size: 1.6rem;
+            margin-bottom: 1rem;
+            color: #1f1f1f;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .about-card h3 i {
+            color: #2874f0;
+            font-size: 1.8rem;
+        }
+        .about-card .lead {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #2874f0;
+            margin-bottom: 1rem;
+        }
+        .about-card p {
+            color: #5f6c7a;
+            line-height: 1.6;
+        }
+
+        /* How It Works Section */
+        .how-it-works {
+            background: #f8fafd;
+            padding: 4rem 0;
+        }
+        .section-title {
+            text-align: center;
+            font-weight: 800;
+            font-size: 2rem;
+            margin-bottom: 2.5rem;
+            color: #1f1f1f;
+            position: relative;
+        }
+        .section-title:after {
+            content: '';
+            position: absolute;
+            bottom: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 4px;
+            background: #2874f0;
+            border-radius: 4px;
+        }
+        .step-card {
+            background: white;
+            border-radius: 24px;
+            padding: 2rem 1.5rem;
+            text-align: center;
+            height: 100%;
+            transition: all 0.3s;
+            border: 1px solid #eef2f6;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
+        }
+        .step-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 20px 30px -12px rgba(0, 0, 0, 0.1);
+            border-color: #2874f0;
+        }
+        .step-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #eef5ff, #ffffff);
+            border-radius: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.2rem;
+            font-size: 2.5rem;
+            color: #2874f0;
+            border: 1px solid #e0e9f5;
+        }
+        .step-card h5 {
+            font-weight: 700;
+            font-size: 1.2rem;
+            margin-bottom: 0.75rem;
+            color: #1f1f1f;
+        }
+        .step-card p {
+            color: #5f6c7a;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        /* Technology Stack - Modern Grid */
+        .tech-stack {
+            padding: 4rem 0;
+            background: white;
+        }
+        .tech-card {
+            background: #f8fafd;
+            border-radius: 20px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: all 0.2s;
+            border: 1px solid #eef2f6;
+        }
+        .tech-card:hover {
+            background: #ffffff;
+            border-color: #2874f0;
+            transform: scale(1.02);
+        }
+        .tech-card h4 {
+            font-weight: 700;
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            color: #1f1f1f;
+        }
+        .tech-card p {
+            color: #5f6c7a;
+            font-size: 0.85rem;
+            margin-bottom: 0;
+        }
+        .tech-icon {
+            font-size: 2.5rem;
+            margin-bottom: 0.8rem;
+        }
+
+        /* Stats Row */
+        .stats-row {
+            background: linear-gradient(135deg, #f8fafd 0%, #ffffff 100%);
+            padding: 3rem 0;
+            border-top: 1px solid #eef2f6;
+            border-bottom: 1px solid #eef2f6;
+        }
+        .stat-item {
+            text-align: center;
+        }
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #2874f0;
+            margin-bottom: 0.25rem;
+        }
+        .stat-label {
+            color: #5f6c7a;
+            font-weight: 500;
+            font-size: 0.85rem;
+        }
+
+        /* Footer */
+        footer {
+            background: #ffffff;
+            border-top: 1px solid #eef2f6;
+            color: #5f6c7a;
+            padding: 2rem 0;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .mission-vision h1 {
+                font-size: 2rem;
+            }
+            .about-card h3 {
+                font-size: 1.3rem;
+            }
+            .step-card {
+                margin-bottom: 1rem;
+            }
+            .section-title {
+                font-size: 1.6rem;
+            }
+            .stat-number {
+                font-size: 1.8rem;
+            }
+        }
+
+        /* Animation */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .about-card, .step-card, .tech-card {
+            animation: fadeInUp 0.5s ease forwards;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+     <nav class="navbar navbar-expand-lg sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="/">
+                <i class="fas fa-shield-alt"></i> FakeCheck<span style="font-weight:400"> | AI</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link " href="/"><i class="fas fa-home me-1"></i>Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/upload"><i class="fas fa-cloud-upload-alt me-1"></i>Upload</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/products"><i class="fas fa-boxes me-1"></i>Products</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/product_detection"><i class="fas fa-search me-1"></i>Product AI</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/review_detection"><i class="fas fa-star-half-alt me-1"></i>Review AI</a></li>
+                    
+                    <li class="nav-item"><a class="nav-link active" href="/about"><i class="fas fa-info-circle me-1"></i>About</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- About Hero -->
+    <div class="mission-vision">
+        <div class="container text-center">
+            <h1 class="display-4 mb-4">About Our System</h1>
+            <p class="lead">Empowering consumers with AI-powered fake review detection</p>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="about-section">
+        <div class="container">
+            <div class="row g-4">
+                <div class="col-md-6">
+                    <div class="about-card">
+                        <h3>
+                            <i class="fas fa-bullseye"></i>
+                            Our Mission
+                        </h3>
+                        <p class="lead">To create a trustworthy online marketplace by identifying and eliminating fake product reviews.</p>
+                        <p>In today's digital age, consumers heavily rely on online reviews to make purchasing decisions. Unfortunately, fake reviews have become a significant problem, misleading customers and damaging the credibility of e-commerce platforms.</p>
+                        <div class="mt-3">
+                            <span class="badge bg-light text-primary rounded-pill px-3 py-2">
+                                <i class="fas fa-chart-line me-1"></i> 98% detection accuracy
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="about-card">
+                        <h3>
+                            <i class="fas fa-eye"></i>
+                            Our Vision
+                        </h3>
+                        <p class="lead">A world where every online review is authentic and trustworthy.</p>
+                        <p>We envision a future where consumers can shop with confidence, knowing that the reviews they read reflect genuine customer experiences. Our AI-powered platform is building that future, one review at a time.</p>
+                        <div class="mt-3">
+                            <span class="badge bg-light text-primary rounded-pill px-3 py-2">
+                                <i class="fas fa-shield-alt me-1"></i> Trust first
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Stats Row -->
+    <div class="stats-row">
+        <div class="container">
+            <div class="row g-4">
+                <div class="col-md-3 col-6">
+                    <div class="stat-item">
+                        <div class="stat-number">98.4%</div>
+                        <div class="stat-label">Detection Accuracy</div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-6">
+                    <div class="stat-item">
+                        <div class="stat-number">2.5k+</div>
+                        <div class="stat-label">Products Analyzed</div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-6">
+                    <div class="stat-item">
+                        <div class="stat-number">12k+</div>
+                        <div class="stat-label">Reviews Processed</div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-6">
+                    <div class="stat-item">
+                        <div class="stat-number">24/7</div>
+                        <div class="stat-label">AI Monitoring</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- How It Works -->
+    <div class="how-it-works">
+        <div class="container">
+            <h2 class="section-title">How It Works</h2>
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="step-card">
+                        <div class="step-icon">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                        </div>
+                        <h5>Step 1: Upload Product</h5>
+                        <p>Add product details including title, price, description, and customer reviews for comprehensive analysis.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="step-card">
+                        <div class="step-icon">
+                            <i class="fas fa-brain"></i>
+                        </div>
+                        <h5>Step 2: AI Analysis</h5>
+                        <p>Our advanced AI model analyzes product details, review patterns, and linguistic markers for authenticity.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="step-card">
+                        <div class="step-icon">
+                            <i class="fas fa-chart-bar"></i>
+                        </div>
+                        <h5>Step 3: Get Results</h5>
+                        <p>Receive detailed analysis with fake/real classification, confidence scores, and actionable insights.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Technology Stack -->
+    <div class="tech-stack">
+        <div class="container">
+            <h2 class="section-title">Technology Stack</h2>
+            <div class="row g-4 text-center">
+                <div class="col-md-3 col-6">
+                    <div class="tech-card">
+                        <div class="tech-icon">🐍</div>
+                        <h4>Python</h4>
+                        <p>Core Programming Language</p>
+                    </div>
+                </div>
+                <div class="col-md-3 col-6">
+                    <div class="tech-card">
+                        <div class="tech-icon">🌶️</div>
+                        <h4>Flask</h4>
+                        <p>Web Framework</p>
+                    </div>
+                </div>
+                <div class="col-md-3 col-6">
+                    <div class="tech-card">
+                        <div class="tech-icon">🤖</div>
+                        <h4>Machine Learning</h4>
+                        <p>Review Analysis & NLP</p>
+                    </div>
+                </div>
+                <div class="col-md-3 col-6">
+                    <div class="tech-card">
+                        <div class="tech-icon">📊</div>
+                        <h4>Pandas & Scikit-learn</h4>
+                        <p>Data Processing & Modeling</p>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-4">
+                <div class="col-12 text-center">
+                    <div class="tech-card d-inline-block px-4 py-3 mx-auto" style="max-width: 300px;">
+                        <div class="tech-icon" style="font-size: 1.8rem;">🔍</div>
+                        <h4>BERT-based NLP</h4>
+                        <p>Advanced text analysis for fake review detection</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-4">
+        <div class="container text-center">
+            <p>&copy; 2024 Fake Review Detection System. All rights reserved.</p>
+            <p>Making e-commerce safer for everyone</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

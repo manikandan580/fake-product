@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>{{ product.title }} - Product Details | FlipGuard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* ========= FLIPKART-INSPIRED MODERN UI ========= */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background: #f1f3f6;
+            color: #212121;
+        }
+
+        /* Import Inter font for modern look */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap');
+
+        /* Navigation - Clean white navbar like Flipkart */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #f8fafc;
+            color: #0a2540;
+            scroll-behavior: smooth;
+        }
+
+        /* modern white/blue theme with subtle gradients */
+        :root {
+            --primary-blue: #1e3a8a;
+            --accent-blue: #2563eb;
+            --sky-mist: #eff6ff;
+            --pure-white: #ffffff;
+            --soft-gray: #f1f5f9;
+            --slate: #334155;
+            --flipkart-blue: #2874f0;
+        }
+
+        /* Navigation - sleek glassmorphism */
+        .navbar {
+            background: rgba(255, 255, 255, 0.96) !important;
+            backdrop-filter: blur(2px);
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.03), 0 1px 0 rgba(0, 0, 0, 0.02);
+            padding: 0.85rem 0;
+        }
+
+        .navbar-brand {
+            font-weight: 700;
+            font-size: 1.6rem;
+            letter-spacing: -0.3px;
+            background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent !important;
+        }
+
+        .navbar-brand i {
+            background: none;
+            -webkit-background-clip: unset;
+            background-clip: unset;
+            color: #2563eb;
+            margin-right: 6px;
+        }
+
+        .nav-link {
+            font-weight: 500;
+            color: #1e293b !important;
+            margin: 0 0.5rem;
+            transition: all 0.2s ease;
+            border-radius: 40px;
+            padding: 0.5rem 1rem;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            color: #2563eb !important;
+            background-color: #eff6ff;
+        }
+
+
+        /* Breadcrumb - modern style */
+        .breadcrumb {
+            background: transparent;
+            padding: 0;
+            margin-bottom: 20px;
+        }
+        .breadcrumb-item a {
+            color: #2874f0;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.85rem;
+        }
+        .breadcrumb-item a:hover {
+            color: #1a5fcf;
+            text-decoration: underline;
+        }
+        .breadcrumb-item.active {
+            color: #5f6c7a;
+            font-weight: 500;
+        }
+
+        /* Product Detail Container - Card Style */
+        .product-detail-container {
+            background: white;
+            border-radius: 28px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.04), 0 2px 4px rgba(0, 0, 0, 0.02);
+            padding: 30px;
+            margin: 30px 0;
+            transition: all 0.2s;
+            border: 1px solid #f0f2f5;
+        }
+
+        /* Product Image - Flipkart style gallery look */
+        .product-image-large {
+            width: 100%;
+            max-height: 450px;
+            object-fit: contain;
+            border-radius: 20px;
+            background: #ffffff;
+            padding: 20px;
+            transition: transform 0.3s ease;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.03);
+        }
+        .product-image-large:hover {
+            transform: scale(1.01);
+        }
+
+        /* Typography */
+        .product-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: #1f1f1f;
+            line-height: 1.3;
+        }
+
+        /* Price section - Flipkart bold */
+        .price-large {
+            font-size: 2rem;
+            font-weight: 800;
+            color: #388e3c;
+            margin: 16px 0;
+            letter-spacing: -0.5px;
+        }
+
+        /* Rating stars - Flipkart gold */
+        .rating-large {
+            color: #ff9f00;
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+        .rating-text {
+            font-size: 0.9rem;
+            color: #5f6c7a;
+            margin-left: 0;
+            font-weight: 500;
+            background: #f0f5ff;
+            padding: 4px 12px;
+            border-radius: 40px;
+        }
+
+        /* Product Meta Row */
+        .product-meta {
+            display: flex;
+            gap: 24px;
+            margin: 24px 0;
+            padding: 16px 0;
+            border-top: 1px solid #eef2f6;
+            border-bottom: 1px solid #eef2f6;
+            background: #fafcff;
+            border-radius: 16px;
+            padding: 16px 20px;
+        }
+        .meta-item {
+            text-align: center;
+            flex: 1;
+        }
+        .meta-value {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #2874f0;
+        }
+        .meta-label {
+            font-size: 0.75rem;
+            color: #6b6f76;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+
+        /* Info Section (Description/Features) - Modern card inside */
+        .info-section {
+            background: #fafcff;
+            padding: 20px 24px;
+            border-radius: 20px;
+            margin: 20px 0;
+            border: 1px solid #eef2f6;
+            transition: all 0.2s;
+        }
+        .info-section:hover {
+            border-color: #d9e2ef;
+            background: #ffffff;
+        }
+        .info-label {
+            font-weight: 700;
+            color: #1f1f1f;
+            margin-bottom: 12px;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .info-label i {
+            color: #2874f0;
+            font-size: 1.1rem;
+        }
+        .info-value {
+            color: #3c4b5a;
+            line-height: 1.55;
+            font-size: 0.95rem;
+        }
+
+        /* Features list - modern tick */
+        .features-list {
+            list-style: none;
+            padding-left: 0;
+            margin: 0;
+        }
+        .features-list li {
+            padding: 10px 0;
+            border-bottom: 1px solid #eef2f6;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 0.9rem;
+        }
+        .features-list li:last-child {
+            border-bottom: none;
+        }
+        .features-list li i {
+            color: #388e3c;
+            font-size: 0.9rem;
+            width: 22px;
+        }
+
+        /* Product Link Section - Flipkart style */
+        .product-link-section {
+            background: linear-gradient(135deg, #f8faff 0%, #ffffff 100%);
+            border-radius: 20px;
+            padding: 18px 20px;
+            margin-top: 20px;
+            border: 1px solid #e0e9f5;
+            transition: all 0.2s;
+        }
+        .product-link {
+            word-break: break-all;
+            color: #2874f0;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.85rem;
+        }
+        .product-link:hover {
+            text-decoration: underline;
+            color: #1a5fcf;
+        }
+        .copy-link-btn {
+            background: #ffffff;
+            border: 1px solid #2874f0;
+            color: #2874f0;
+            border-radius: 40px;
+            padding: 6px 16px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+        .copy-link-btn:hover {
+            background: #2874f0;
+            color: white;
+            transform: translateY(-1px);
+        }
+
+        /* Action Buttons - Flipkart primary & outline */
+        .action-buttons {
+            margin-top: 30px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+        .action-buttons .btn {
+            padding: 12px 28px;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.2s;
+        }
+        .btn-primary {
+            background: #2874f0;
+            border: none;
+            box-shadow: 0 2px 6px rgba(40, 116, 240, 0.2);
+        }
+        .btn-primary:hover {
+            background: #1a5fcf;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 16px rgba(40, 116, 240, 0.25);
+        }
+        .btn-outline-primary {
+            border: 1.5px solid #2874f0;
+            color: #2874f0;
+            background: white;
+        }
+        .btn-outline-primary:hover {
+            background: #2874f0;
+            color: white;
+            transform: translateY(-2px);
+        }
+        .btn-outline-success {
+            border: 1.5px solid #388e3c;
+            color: #388e3c;
+            background: white;
+        }
+        .btn-outline-success:hover {
+            background: #388e3c;
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        /* Alert / Recommendation Banner */
+        .alert-info {
+            background: #eef5ff;
+            border: none;
+            border-radius: 20px;
+            color: #1f4f8a;
+            padding: 16px 24px;
+            margin-top: 24px;
+            margin-bottom: 30px;
+        }
+        .alert-info a {
+            color: #2874f0;
+            font-weight: 600;
+            text-decoration: none;
+        }
+        .alert-info a:hover {
+            text-decoration: underline;
+        }
+
+        /* Toast notification */
+        .toast-custom {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            z-index: 9999;
+        }
+        .toast {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 12px 28px rgba(0, 0, 0, 0.12);
+            border-left: 5px solid #388e3c;
+        }
+        .toast-header {
+            background: white;
+            border-bottom: 1px solid #eef2f6;
+            color: #1f1f1f;
+            border-radius: 20px 20px 0 0;
+        }
+        .toast-header .btn-close {
+            font-size: 0.7rem;
+        }
+
+        /* Footer - Flipkart minimal */
+        footer {
+            background: #ffffff;
+            border-top: 1px solid #eef2f6;
+            color: #5f6c7a;
+            padding: 2rem 0;
+            margin-top: 2rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .product-detail-container {
+                padding: 20px;
+            }
+            .product-title {
+                font-size: 1.4rem;
+            }
+            .price-large {
+                font-size: 1.6rem;
+            }
+            .action-buttons .btn {
+                width: 100%;
+                text-align: center;
+            }
+            .product-meta {
+                flex-direction: column;
+                gap: 12px;
+            }
+            .meta-item {
+                text-align: left;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+            .info-section {
+                padding: 16px;
+            }
+        }
+
+        /* Additional modern touches */
+        .badge-rating {
+            background: #ff9f00;
+            color: white;
+            border-radius: 20px;
+            padding: 2px 8px;
+            font-size: 0.7rem;
+        }
+        hr {
+            background-color: #eef2f6;
+            opacity: 0.6;
+        }
+        i.fa, i.far, i.fas {
+            transition: all 0.1s;
+        }
+        .product-link-section .info-label i {
+            color: #2874f0;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+     <nav class="navbar navbar-expand-lg sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="/">
+                <i class="fas fa-shield-alt"></i>FakeCheck<span style="font-weight:400"> | AI</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="/"><i class="fas fa-home me-1"></i>Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/upload"><i class="fas fa-cloud-upload-alt me-1"></i>Upload</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="/products"><i class="fas fa-boxes me-1"></i>Products</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/product_detection"><i class="fas fa-search me-1"></i>Product AI</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/review_detection"><i class="fas fa-star-half-alt me-1"></i>Review AI</a></li>
+                    
+                    <li class="nav-item"><a class="nav-link" href="/about"><i class="fas fa-info-circle me-1"></i>About</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        <!-- Breadcrumb Navigation -->
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/">Home</a></li>
+                <li class="breadcrumb-item"><a href="/products">Products</a></li>
+                <li class="breadcrumb-item active" aria-current="page">{{ product.title[:50] }}</li>
+            </ol>
+        </nav>
+
+        <!-- Product Details Container -->
+        <div class="product-detail-container">
+            <div class="row">
+                <!-- Product Image Column -->
+                <div class="col-md-6">
+                    <img src="{{ url_for('static', filename='uploads/' + product.image) }}" 
+                         class="product-image-large img-fluid" 
+                         alt="{{ product.title }}"
+                         onerror="this.src='https://via.placeholder.com/400x400?text=No+Image'">
+                </div>
+                
+                <!-- Product Info Column -->
+                <div class="col-md-6">
+                    <div class="product-title">{{ product.title }}</div>
+                    
+                    <div class="price-large">${{ "%.2f"|format(product.price) }}</div>
+                    
+                    <div class="rating-large">
+                        {% set rating = product.rating|float %}
+                        {% for i in range(5) %}
+                            {% if i < rating|int %}
+                                <i class="fas fa-star"></i>
+                            {% elif rating|int == i and rating % 1 >= 0.5 %}
+                                <i class="fas fa-star-half-alt"></i>
+                            {% else %}
+                                <i class="far fa-star"></i>
+                            {% endif %}
+                        {% endfor %}
+                        <span class="rating-text">{{ "%.1f"|format(rating) }} out of 5</span>
+                    </div>
+                    
+                    <div class="product-meta">
+                        <div class="meta-item">
+                            <div class="meta-value">{{ product.brand if product.brand else 'N/A' }}</div>
+                            <div class="meta-label">Brand</div>
+                        </div>
+                        <div class="meta-item">
+                            <div class="meta-value">
+                                {% if product.rating and product.rating >= 4.5 %}
+                                    <i class="fas fa-medal" style="color: gold;"></i> Top Rated
+                                {% elif product.rating and product.rating >= 4.0 %}
+                                    <i class="fas fa-check-circle" style="color: #28a745;"></i> Highly Rated
+                                {% else %}
+                                    Standard
+                                {% endif %}
+                            </div>
+                            <div class="meta-label">Rating Status</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Product Link Section (NEW) -->
+                    <div class="product-link-section">
+                        <div class="info-label">
+                            <i class="fas fa-link"></i> Product Link
+                        </div>
+                        <div class="info-value">
+                            <div class="d-flex align-items-center justify-content-between flex-wrap">
+                                <a href="{{ product.link }}" target="_blank" class="product-link" id="productLink">
+                                    <i class="fas fa-external-link-alt"></i> {{ product.link }}
+                                </a>
+                                <button class="btn copy-link-btn ms-2" onclick="copyToClipboard()">
+                                    <i class="fas fa-copy"></i> Copy
+                                </button>
+                            </div>
+                            <small class="text-muted mt-2 d-block">
+                                <i class="fas fa-info-circle"></i> Click the link to visit the original product page
+                            </small>
+                        </div>
+                    </div>
+                    
+                    <!-- Description Section -->
+                    <div class="info-section">
+                        <div class="info-label">
+                            <i class="fas fa-align-left"></i> Description
+                        </div>
+                        <div class="info-value">
+                            {{ product.description }}
+                        </div>
+                    </div>
+                    
+                    <!-- Features Section -->
+                    {% if product.features and product.features != 'nan' and product.features|length > 0 %}
+                    <div class="info-section">
+                        <div class="info-label">
+                            <i class="fas fa-list-ul"></i> Key Features
+                        </div>
+                        <ul class="features-list">
+                            {% set features_list = product.features.split('\n') %}
+                            {% for feature in features_list %}
+                                {% if feature.strip() and feature != 'nan' %}
+                                    <li><i class="fas fa-check-circle"></i> {{ feature.strip() }}</li>
+                                {% endif %}
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    {% endif %}
+                    
+                    <!-- Address Section -->
+                    {% if product.address and product.address != 'nan' %}
+                    <div class="info-section">
+                        <div class="info-label">
+                            <i class="fas fa-map-marker-alt"></i> Seller Location
+                        </div>
+                        <div class="info-value">
+                            <i class="fas fa-store"></i> {{ product.address }}
+                        </div>
+                    </div>
+                    {% endif %}
+                    
+                    <!-- Action Buttons -->
+                    <div class="action-buttons">
+                        <a href="{{ product.link }}" target="_blank" class="btn btn-primary">
+                            <i class="fas fa-external-link-alt"></i> Visit Product Page
+                        </a>
+                        <a href="/product_detection" class="btn btn-outline-primary">
+                            <i class="fas fa-search"></i> Check Authenticity
+                        </a>
+                        <a href="/review_detection" class="btn btn-outline-success">
+                            <i class="fas fa-star"></i> Analyze Reviews
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Recommendations Section -->
+        <div class="alert alert-info mt-4">
+            <i class="fas fa-info-circle"></i> 
+            <strong>Need to verify this product?</strong> Use our 
+            <a href="/product_detection" class="alert-link">Product Detection</a> tool to check if this product is genuine or 
+            <a href="/review_detection" class="alert-link">Review Detection</a> to analyze customer reviews for authenticity.
+        </div>
+    </div>
+
+    <!-- Toast Notification for Copy -->
+    <div class="toast-custom">
+        <div id="copyToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-bs-delay="2000">
+            <div class="toast-header bg-success text-white">
+                <i class="fas fa-check-circle me-2"></i>
+                <strong class="me-auto">Success!</strong>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="toast"></button>
+            </div>
+            <div class="toast-body">
+                Product link copied to clipboard!
+            </div>
+        </div>
+    </div>
+
+    <footer class="bg-dark text-white py-4 mt-5">
+        <div class="container text-center">
+            <p>&copy; 2024 Fake Review Detection System. All rights reserved.</p>
+            <p class="small">Helping you make informed purchase decisions</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function copyToClipboard() {
+            // Get the product link
+            const productLink = document.getElementById('productLink').href;
+            
+            // Copy to clipboard
+            navigator.clipboard.writeText(productLink).then(function() {
+                // Show toast notification
+                const toastElement = document.getElementById('copyToast');
+                const toast = new bootstrap.Toast(toastElement);
+                toast.show();
+            }).catch(function(err) {
+                console.error('Could not copy text: ', err);
+                alert('Failed to copy link. Please copy manually.');
+            });
+        }
+        
+        // Add a nice hover effect for the product link
+        document.addEventListener('DOMContentLoaded', function() {
+            const productLink = document.getElementById('productLink');
+            if (productLink) {
+                productLink.addEventListener('mouseenter', function() {
+                    this.style.textDecoration = 'underline';
+                });
+                productLink.addEventListener('mouseleave', function() {
+                    this.style.textDecoration = 'none';
+                });
+            }
+        });
+    </script>
+</body>
+</html>

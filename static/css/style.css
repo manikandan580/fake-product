@@ -1,0 +1,45 @@
+/* Base body style */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f9f9f9;
+}
+
+/* Card hover effect for products */
+.card:hover {
+    transform: scale(1.03);
+    transition: 0.3s ease-in-out;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+}
+
+/* Buttons */
+.btn-primary {
+    background-color: #0078ff;
+    border-color: #0078ff;
+}
+.btn-primary:hover {
+    background-color: #0056b3;
+    border-color: #0056b3;
+}
+
+/* Page titles */
+h2 {
+    margin-bottom: 20px;
+    color: #333;
+}
+
+/* Forms */
+form .form-control {
+    margin-bottom: 15px;
+}
+
+/* Footer */
+footer {
+    background-color: #f1f1f1;
+    color: #555;
+}
+
+/* Alerts */
+.alert-info {
+    background-color: #d9edf7;
+    color: #31708f;
+}
